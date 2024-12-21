@@ -11,7 +11,7 @@ Fluss leverages the well-known Lakehouse storage solutions like Apache Paimon, A
 the tiered storage layer. Currently, only Apache Paimon is supported, but more kinds of Lakehouse storage support are on the ways.
 
 Fluss's datalake tiering service will compact Fluss's data to the Lakehouse storage continuously. The data in Lakehouse storage can be read both by Fluss's client in a streaming manner and accessed directly
-by external systems such as Flink, Spark, StarRocks and others. With data tired in Lakehouse storage, Fluss
+by external systems such as Flink, Spark, StarRocks and others. With data tiered in Lakehouse storage, Fluss
 can gain much storage cost reduction and analytics performance improvement.
 
 
@@ -23,7 +23,7 @@ Lakehouse Storage disabled by default, you must enable it manually.
 First, you must configure the lakehouse storage in `server.yaml`. Take Paimon
 as an example, you must configure the following configurations:
 ```yaml
-datalake.tiered.storage: paimon
+lakehouse.storage: paimon
 
 # the catalog config about Paimon, assuming using Filesystem catalog
 paimon.catalog.type: filesystem
@@ -45,10 +45,15 @@ cd $FLUSS_HOME
 
 **Note:**
 - `flink.rest.address` and `flink.rest.port` are the Flink cluster's rest endpoint, you may need to change it according to your Flink cluster's configuration.
-- The datalake tiering service is actual a flink job, you can set the Flink configuration in `-D` arguments while starting the datalake tiering service. For example, if want to set the checkpoint interval to 10s,
-  you can use the following command to start the datalake tiering service:
+- The datalake tiering service is actual a flink job, you can set the Flink configuration in `-D` arguments while starting the datalake tiering service, There are some example commands for reference below.
 ```shell
+# If want to set the checkpoint interval to 10s, you can use the following command to start the datalake tiering service
 ./bin/lakehouse.sh -D flink.rest.address=localhost -D flink.rest.port=8081 -D flink.execution.checkpointing.interval=10s
+
+# By default, datalake tiering service synchronizes all the tables with datalake enabled to Lakehouse Storage.
+# To distribute the workload of the datalake tiering service through multiple Flink jobs, 
+# you can specify the "database" parameter to synchronize only the datalake enabled tables in the specific database.
+./bin/lakehouse.sh -D flink.rest.address=localhost -D flink.rest.port=8081 -D database=fluss_\\w+
 ```
 
 ### Enable Lakehouse Storage Per Table

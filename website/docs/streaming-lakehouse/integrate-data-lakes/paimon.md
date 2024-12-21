@@ -5,7 +5,7 @@ sidebar_position: 1
 
 # Paimon
 
-[Apahce Paimon](https://paimon.apache.org/) innovatively combines lake format and LSM structure, bringing efficient updates into the lake architecture.
+[Apache Paimon](https://paimon.apache.org/) innovatively combines lake format and LSM structure, bringing efficient updates into the lake architecture.
 To integrate Fluss with Paimon, you must enable lakehouse storage and configure Paimon as lakehouse storage. See more detail about [Enable Lakehouse Storage](maintenance/tiered-storage/lakehouse-storage.md#enable-lakehouse-storage).
 
 ## Introduction
@@ -59,7 +59,7 @@ run the query multi-times, you should get different results in every one run as 
 
 ### Read by other engines
 
-As the tired data in Paimon compacted from Fluss is also a standard Paimon table, you can use
+As the tiered data in Paimon compacted from Fluss is also a standard Paimon table, you can use
 [any engines](https://paimon.apache.org/docs/0.9/engines/overview/) that support Paimon to read the data. Here, we take [StarRocks](https://paimon.apache.org/docs/master/engines/starrocks/) as the engine to read the data:
 
 First, create a Paimon catalog for StarRocks:
